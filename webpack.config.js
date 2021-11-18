@@ -1,6 +1,8 @@
 //引用path模組
 const path = require('path');
 module.exports = {
+    // 需設置 mode, 不然下 webpakck 會警告
+    mode:"development",
     //這個 webpack 要打包的對象
     entry: ['./index.js', './app.jsx'],
     output: {
