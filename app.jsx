@@ -86,7 +86,7 @@ class NowTime extends React.Component {
 }
 ReactDOM.render(<NowTime />,document.getElementById('timerInClass'))
 
-//----------------------------------ERROR---------------------------------
+//--------------------------------------------------------------------------------------------------------------------------------------
 class TimerClose extends React.Component {
   constructor(props){
     super(props)
@@ -95,7 +95,7 @@ class TimerClose extends React.Component {
 
   componentDidMount(){
     const upTime = () =>{
-      this.setState({time : 4})
+      this.setState({time : this.state.time - 1})
     }
     setInterval(upTime, 1000)   
   }
@@ -120,4 +120,70 @@ class TimerClose extends React.Component {
   }
 }
 ReactDOM.render(<TimerClose />, document.getElementById('timerClose'))
-//----------------------------------ERROR---------------------------------
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+
+
+class AddButton extends React.Component{
+  constructor(props){
+      super(props)
+      this.state = ({clickCount : 0})
+      this.addCount = this.addCount.bind(this)
+  }
+  //增加一個count的參數，用來表示每次增加多少
+  addCount(count){
+      console.log(`每次添加值:${count}`)
+      this.setState({clickCount:this.state.clickCount + count})
+  }
+
+  componentDidUpdate(){
+      console.log(`點了${this.state.clickCount}下`)
+  }
+  
+  render(){
+      //在onClick中指定觸發的函式後面添加.bind(this)並填上傳入的第一個參數1
+      return (
+        <div>
+          <input type="button" onClick={this.addCount.bind(this,1)} value="點我" />
+          <h1> 已經點擊 {this.state.clickCount} 次 </h1>
+        </div>
+      )
+  }
+}
+
+ReactDOM.render(<AddButton />,document.getElementById('ClickAdd'))
+
+//--------------------------------------------------------------------------------------------------------------------------------------
+
+class InputGender extends React.Component{
+  constructor(props){
+      super(props)
+      this.state = ({gender : '', text: 'a_count：'})
+      this.changeGender = this.changeGender.bind(this)
+  }
+  // 只有點擊事件 -> 參數寫 event
+  // 有其他參數 -> 不寫 event 也可觸發
+  changeGender(str){
+      //將觸發事件的DOM從event內的target屬性取出
+      console.log(window.event.target)
+      //指定選擇的性別給state.gender
+      this.setState({gender : event.target.value, text: this.state.text + str})
+  }
+  componentDidUpdate(){
+      console.log(`已將state.gender變動為：${this.state.gender}`)
+  }
+  render(){
+      return (
+        <div>
+          <select onChange={this.changeGender.bind(this,'a')}>
+            <option value="M">男</option>
+            <option value="W">女</option>
+          </select>
+          <h1>{this.state.text}</h1>
+        </div>
+      )
+  }
+}
+ReactDOM.render(<InputGender />,document.getElementById('PickList'))
+
+//--------------------------------------------------------------------------------------------------------------------------------------
